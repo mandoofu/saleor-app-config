@@ -5,16 +5,19 @@ metadata:
   namespace: argocd
 spec:
   project: default
+
   source:
     repoURL: https://github.com/mandoofu/saleor-app-config.git
     targetRevision: main
     path: overlays/dev
+
   destination:
     server: https://kubernetes.default.svc
     namespace: frontend
+
   syncPolicy:
     automated:
-      prune: true
-      selfHeal: true
+      prune: true          # 불필요한 리소스 제거
+      selfHeal: true       # 클러스터와 Git 차이 나면 자동 복구
     syncOptions:
-      - CreateNamespace=true
+      - CreateNamespace=true   # frontend 네임스페이스 자동 생성
