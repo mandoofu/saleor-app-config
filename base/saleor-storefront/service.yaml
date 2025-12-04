@@ -1,0 +1,13 @@
+# app-config/base/saleor-storefront/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: saleor-storefront
+  namespace: frontend
+spec:
+  selector:
+    app: saleor-storefront
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000

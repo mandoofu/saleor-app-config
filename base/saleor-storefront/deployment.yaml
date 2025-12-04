@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: saleor-storefront
+  namespace: frontend
+  labels:
+    app: saleor-storefront
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: saleor-storefront
+  template:
+    metadata:
+      labels:
+        app: saleor-storefront
+    spec:
+      containers:
+        - name: saleor-storefront
+          image: 069423016509.dkr.ecr.ap-northeast-3.amazonaws.com/saleor-3tier-dev-storefront:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: API_URL
+              value: "http://saleor-core.backend.svc.cluster.local:8000/graphql/"

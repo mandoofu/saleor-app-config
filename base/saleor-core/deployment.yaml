@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: saleor-core
+  namespace: backend
+  labels:
+    app: saleor-core
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: saleor-core
+  template:
+    metadata:
+      labels:
+        app: saleor-core
+    spec:
+      containers:
+        - name: saleor-core
+          image: 069423016509.dkr.ecr.ap-northeast-3.amazonaws.com/saleor-3tier-dev-core:latest # CI가 태그 변경
+          ports:
+            - containerPort: 8000
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: saleor-core-secret
+                  key: DATABASE_URL
+            - name: REDIS_URL
+              valueFrom:
+                secretKeyRef:
+                  name: saleor-core-secret
+                  key: REDIS_URL
+            - name: AWS_STORAGE_BUCKET_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: saleor-core-secret
+                  key: MEDIA_BUCKET
+            - name: SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: saleor-core-secret
+                  key: SECRET_KEY
+          readinessProbe:
+            httpGet:
+              path: /health/
+              port: 8000
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health/
+              port: 8000
+            initialDelaySeconds: 30
+            periodSeconds: 30

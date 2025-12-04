@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: saleor-core
+  namespace: backend
+spec:
+  template:
+    spec:
+      containers:
+        - name: saleor-core
+          image: 069423016509.dkr.ecr.ap-northeast-3.amazonaws.com/saleor-3tier-dev-core:latest
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: saleor-storefront
+  namespace: frontend
+spec:
+  template:
+    spec:
+      containers:
+        - name: saleor-storefront
+          image: 069423016509.dkr.ecr.ap-northeast-3.amazonaws.com/saleor-3tier-dev-storefront:latest
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: saleor-dashboard
+  namespace: frontend
+spec:
+  template:
+    spec:
+      containers:
+        - name: saleor-dashboard
+          image: 069423016509.dkr.ecr.ap-northeast-3.amazonaws.com/saleor-3tier-dev-dashboard:latest
