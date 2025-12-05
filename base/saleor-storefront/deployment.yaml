@@ -23,3 +23,20 @@ spec:
           env:
             - name: API_URL
               value: "http://saleor-core.backend.svc.cluster.local:8000/graphql/"
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 3000
+            initialDelaySeconds: 10   # 컨테이너 뜨고 10초 뒤부터 체크 시작
+            periodSeconds: 10         # 10초마다 체크
+            timeoutSeconds: 5
+            failureThreshold: 3       # 3번 실패하면 NotReady 처리
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 3000
+            initialDelaySeconds: 30   # 부팅하고 안정화 시간
+            periodSeconds: 30
+            timeoutSeconds: 5
+            failureThreshold: 5       # 5번 연속 실패하면 컨테이너 재시작
+
