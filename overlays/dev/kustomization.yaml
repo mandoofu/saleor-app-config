@@ -1,19 +1,21 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-
 resources:
   - ../../base
 
-# 🔥 이미지 치환: base 에서는 단순 이름(saleor-core 등)을 쓰고
-# dev overlay 에서만 ECR 경로로 변경
+# dev 환경용 이미지 태그 치환
+# - base Deployment 에서는 image: saleor-core 처럼 "짧은 이름"만 쓰고
+# - 여기서 ECR 전체 경로 + dev 전용 태그(dev-latest)를 주입
 images:
   - name: saleor-core
     newName: 069423016509.dkr.ecr.ap-northeast-3.amazonaws.com/saleor-3tier-dev-core
-    newTag: latest
+    newTag: dev-latest
+
   - name: saleor-storefront
     newName: 069423016509.dkr.ecr.ap-northeast-3.amazonaws.com/saleor-3tier-dev-storefront
-    newTag: latest
+    newTag: dev-latest
+
   - name: saleor-dashboard
     newName: 069423016509.dkr.ecr.ap-northeast-3.amazonaws.com/saleor-3tier-dev-dashboard
-    newTag: latest
+    newTag: dev-latest

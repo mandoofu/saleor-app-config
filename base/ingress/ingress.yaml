@@ -4,9 +4,21 @@ metadata:
   name: saleor-ingress
   namespace: frontend
   annotations:
+    # ALB Controller가 이 Ingress를 감지해서 ALB를 생성하도록 지정
     kubernetes.io/ingress.class: alb
+
+    # 인터넷에서 접근 가능한 퍼블릭 ALB
     alb.ingress.kubernetes.io/scheme: internet-facing
+
+    # Pod IP 대상으로 트래픽 전달 (EKS + IP 모드 권장)
     alb.ingress.kubernetes.io/target-type: ip
+
+    # (선택) 명시적으로 80 포트 리스너 사용 – 추후 HTTPS(443) 추가 시 덮어쓰기 쉬움
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80}]'
+
+    # TODO: 나중에 HTTPS 전환 시 아래와 같이 추가
+    # alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:ap-northeast-3:ACCOUNT_ID:certificate/XXXX
+    # alb.ingress.kubernetes.io/ssl-redirect: "443"
 spec:
   rules:
     - host: u3-store.msp-g1.click
@@ -19,6 +31,7 @@ spec:
                 name: saleor-storefront
                 port:
                   number: 80
+
     - host: u3-admin.msp-g1.click
       http:
         paths:
