@@ -26,7 +26,7 @@ metadata:
     # alb.ingress.kubernetes.io/ssl-redirect: "443"
 spec:
   rules:
-    - host: u3-api.msp-g1.click
+    - host: u3-store.msp-g1.click
       http:
         paths:
           - path: /graphql/

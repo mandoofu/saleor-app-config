@@ -27,7 +27,7 @@ spec:
 
             # Next.js (서버/클라이언트 공통)에서 쓰는 GraphQL 엔드포인트
             - name: NEXT_PUBLIC_SALEOR_API_URL
-              value: "http://u3-api.msp-g1.click/graphql/"
+              value: "http://u3-store.msp-g1.click/graphql/"
 
             # 이 스토어의 외부 URL (메타태그, 링크용)
             - name: NEXT_PUBLIC_STOREFRONT_URL
