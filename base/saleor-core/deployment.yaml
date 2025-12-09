@@ -41,6 +41,12 @@ spec:
                 secretKeyRef:
                   name: saleor-core-secret
                   key: SECRET_KEY
+            - name: ALLOWED_HOSTS
+              value: "u3-store.msp-g1.click,u3-admin.msp-g1.click,saleor-core.backend.svc.cluster.local,localhost,127.0.0.1"
+
+            - name: ALLOWED_GRAPHQL_ORIGINS
+              value: "http://u3-store.msp-g1.click,https://u3-store.msp-g1.click,http://u3-admin.msp-g1.click,https://u3-admin.msp-g1.click,http://saleor-core.backend.svc.cluster.local:8000"
+
           readinessProbe:
             httpGet:
               path: /health/
