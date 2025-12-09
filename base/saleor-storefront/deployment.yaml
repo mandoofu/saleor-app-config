@@ -21,8 +21,21 @@ spec:
           ports:
             - containerPort: 3000
           env:
+            # 서버에서 Core 접근용
             - name: API_URL
               value: "http://saleor-core.backend.svc.cluster.local:8000/graphql/"
+
+            # Next.js (서버/클라이언트 공통)에서 쓰는 GraphQL 엔드포인트
+            - name: NEXT_PUBLIC_SALEOR_API_URL
+              value: "http://saleor-core.backend.svc.cluster.local:8000/graphql/"
+
+            # 이 스토어의 외부 URL (메타태그, 링크용)
+            - name: NEXT_PUBLIC_STOREFRONT_URL
+              value: "http://u3-store.msp-g1.click"
+
+            # 채널 이름 (기본값이 default-channel 이라면)
+            - name: NEXT_PUBLIC_SALEOR_CHANNEL
+              value: "default-channel"
           readinessProbe:
             httpGet:
               path: /
