@@ -4,9 +4,10 @@ metadata:
   name: saleor-dashboard
   namespace: frontend
 spec:
+  type: ClusterIP
   selector:
     app: saleor-dashboard
   ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 9000
+    - port: 80        # Service가 노출할 포트
+      targetPort: 80  # Pod 컨테이너 포트도 80으로 맞춤
+      protocol: TCP
